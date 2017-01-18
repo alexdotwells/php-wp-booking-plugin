@@ -1,0 +1,31 @@
+/* Public Styles */
+
+#wc-bookings-booking-form .block-picker li {
+    border-radius: 5px;
+    padding: 7px 12px !important;
+}
+
+#wc-bookings-booking-form .block-picker li a {
+    border-radius: 5px;
+}
+
+.wc-bookings-booking-form .block-picker li.pez {   	
+    width: 99%;
+}
+
+.wc-bookings-booking-form .block-picker li.pez a.pez{   	
+    width: 100% !important;
+}
+
+a[style]:not(#pez_curr) {
+    width: 100% !important;  
+}
+
+.pezHidden {
+    display: none;
+}
+
+.wc-bookings-booking-form .form-field select {
+     width: 40%;
+    padding: 4px;
+}
