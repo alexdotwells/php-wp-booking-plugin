@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Paddle EZ Main Plugin Controller
+ * WordPress Main Plugin Controller
  *
  * @package    Pez
  * @subpackage Pez/includes
