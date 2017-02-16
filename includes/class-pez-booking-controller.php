@@ -1,7 +1,7 @@
 <?php
 
 /**
- * WordPress Booking Controller
+ * Paddle EZ Booking Controller
  *
  * @package    Pez
  * @subpackage Pez/includes
@@ -22,7 +22,7 @@ class Pez_Booking_Controller {
 	}
 
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/css/pez-bookingform.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/css/pez-bookingform.css', array( 'wc-bookings-styles' ), $this->version, 'all' );
 	}
   public function enqueue_scripts() {}
 
@@ -56,6 +56,32 @@ class Pez_Booking_Controller {
   function pez_add_custom_form_fields( $fields ) {
     $this->get_script_on_demand('form_fields');
     return $this->pez_booking->get_custom_form_fields( $fields );
+  }
+
+  /*
+  * Modify product page tab list
+  */
+  function pez_modify_product_tabs( $tabs ) {
+    unset( $tabs['description'] );
+
+    $tabs['product_details'] = array(
+    		'title' 	=> __( 'Product Details', 'woocommerce' ),
+    		'priority' 	=> 9,
+    		'callback' 	=> ( array($this,'pez_product_details_tab_content') )
+    	);
+  	return $tabs;
+  }
+
+  /*
+  * Callback for product_details tab
+  */
+  function pez_product_details_tab_content() {
+    global $product;
+
+    echo '<span class="label">Price:</span>';
+    echo '<p>'. $product->get_price_html() . '</p>';
+    echo '<span class="label">Description:</span>';
+    echo '<p>'. get_post($product->id)->post_content .'</p>';
   }
 
   /*

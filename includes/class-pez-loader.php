@@ -1,7 +1,7 @@
 <?php
 
 /**
- * WordPress Loader
+ * Paddle EZ Loader
  *
  * @package    Pez
  * @subpackage Pez/includes

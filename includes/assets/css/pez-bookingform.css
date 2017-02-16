@@ -1,31 +1,103 @@
-/* Public Styles */
+/** PEZ PUBLIC STYLES **/
 
+
+/* booking form */
 #wc-bookings-booking-form .block-picker li {
     border-radius: 5px;
     padding: 7px 12px !important;
 }
-
 #wc-bookings-booking-form .block-picker li a {
     border-radius: 5px;
 }
-
-.wc-bookings-booking-form .block-picker li.pez {   	
+#wc-bookings-booking-form .block-picker li.pez {
     width: 99%;
 }
-
-.wc-bookings-booking-form .block-picker li.pez a.pez{   	
+#wc-bookings-booking-form .block-picker li.pez a.pez{
     width: 100% !important;
 }
-
-a[style]:not(#pez_curr) {
-    width: 100% !important;  
-}
-
-.pezHidden {
-    display: none;
-}
-
-.wc-bookings-booking-form .form-field select {
-     width: 40%;
+#wc-bookings-booking-form .form-field select {
+    width: 40%;
     padding: 4px;
+}
+#wc-bookings-booking-form fieldset.wc-bookings-date-picker .ui-datepicker td.ui-datepicker-current-day,
+#wc-bookings-booking-form fieldset.wc-bookings-date-picker .ui-datepicker td.ui-datepicker-current-day:hover,
+#wc-bookings-booking-form fieldset.wc-bookings-date-picker .ui-datepicker td.bookable a:hover {
+  background-color: #00aeef !important;
+}
+a[style]:not(#pez_curr) {
+    width: 100% !important;
+}
+.pezHidden {
+    display: none !important;
+}
+
+/* nav */
+nav#site-navigation button.menu-toggle {
+    transform: translate(0, 50%);
+}
+body.home.blog .site-header,
+body.home.page:not(.page-template-template-homepage) .site-header,
+body.home.post-type-archive-product .site-header,
+nav.woocommerce-breadcrumb,
+.no-wc-breadcrumb .site-header {
+    margin-bottom: 30px !important;
+}
+@media (max-width: 568px) {
+    .site-header .custom-logo-link img.custom-logo {
+      color: #3D9CD2;
+      margin-left: -20px;
+    }
+}
+
+/* tabs */
+div.woocommerce-tabs {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.woocommerce-tabs ul.tabs,
+div.woocommerce-tabs .panel {
+  width: 100%;
+  margin-bottom: 0;
+}
+div.woocommerce-tabs ul.tabs,
+div.woocommerce-tabs ul.tabs li {
+  border: none;
+}
+div.woocommerce-tabs p {
+  margin: -5px 0 11px;
+}
+div.woocommerce-tabs .panel span.label {
+    font-weight: 600;
+    margin: 0;
+}
+div.woocommerce-tabs ul.tabs li.closed::after {
+    color: #3D9CD2;
+    content: "\f105" !important;
+}
+div.woocommerce-tabs ul.tabs li.open::after {
+    color: #3D9CD2;
+    content: "\f107" !important;
+}
+@media (max-width: 768px) {
+  div.woocommerce-tabs ul.tabs li::after {
+      color: #3D9CD2;
+      content: "\f105" !important;
+  }
+}
+
+/* messages */
+div.woocommerce div.woocommerce-info,
+div.woocommerce div.woocommerce-message {
+  background-color: transparent !important;
+  border: none;
+  color: #000 !important;
+  padding: 0;
+}
+div.woocommerce div.woocommerce-info a,
+div.woocommerce div.woocommerce-message a.button.wc-forward,
+div.woocommerce-tabs ul.tabs li.active a {
+  color: #3D9CD2 !important;
+}
+div.woocommerce div.woocommerce-info a {
+  padding-left: 15px;
 }

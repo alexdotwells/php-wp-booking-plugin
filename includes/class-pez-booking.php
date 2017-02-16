@@ -1,7 +1,7 @@
 <?php
 
 /**
- * WordPress Custom Booking Methods
+ * Paddle EZ Custom Booking Methods
  *
  * @package    Pez
  * @subpackage Pez/includes
@@ -20,6 +20,7 @@ class Pez_Booking_Functions{
   private $is_form_built;
   private $is_open;
   private $is_today;
+  private $max_res_count;
   private $options;
   private $time_format;
   private $timezone;
@@ -32,6 +33,7 @@ class Pez_Booking_Functions{
     $this->is_today        = false;
     $this->time_format     = get_option('time_format');
     $this->timezone        = get_option('timezone_string');
+    $this->max_res_count   = ( isset($this->options['max_resource_count']) && is_numeric($this->options['max_resource_count']) ) ? $this->options['max_resource_count'] : 4;
     if ( !is_null($post) ) {
       $this->posted = $post;
     }
@@ -102,11 +104,10 @@ class Pez_Booking_Functions{
     if ( empty( $block_html ) ) {
     	$block_html .= '<li>' . __( 'No blocks available.', 'woocommerce-bookings' ) . '</li>';
     } else {
-      $html_current = $this->get_current_time_button( $year.'-'.$month.'-'.$day, $booking_form );
+      $html_current = $this->get_current_time_button( $year.'-'.$month.'-'.$day, $booking_form, $quantity );
       $block_html =  $html_current . $block_html;
     }
-
-    echo(  "<script>(function( $ ) { $('html, body').animate({scrollTop: $('fieldset.wc-bookings-date-picker').offset().top },1000); })( jQuery );</script>" );
+    echo("<script>(function( $ ) { $('html, body').animate({scrollTop: $('.wc-bookings-booking-form-button.single_add_to_cart_button.button.alt').offset().top },1500); })( jQuery );</script>");
 
     return $block_html;
 	}
@@ -178,7 +179,7 @@ class Pez_Booking_Functions{
   /*
   * Get book 'NOW' button
   */
-  function get_current_time_button( $sel_date, $booking_form ) {
+  function get_current_time_button( $sel_date, $booking_form, $quantity ) {
     date_default_timezone_set($this->timezone);
 
     $selected = new DateTime($sel_date);
@@ -201,11 +202,10 @@ class Pez_Booking_Functions{
 
       if ( ! empty( $_time ) ) {
           $_start_date = strtotime( $_date . ' ' . $_time );
-          $_end_date   = strtotime( "+10 Minutes", $_start_date );
+          $_end_date   = strtotime( "+29 Minutes", $_start_date );
           $_all_day    = 0;
       }
 
-      //check resource availability
       $available_bookings = $booking_form->product->get_available_bookings( $_start_date, $_end_date, 0, 1 );
       $isOk = false;
       if ( is_wp_error( $available_bookings ) ) {;
@@ -213,7 +213,9 @@ class Pez_Booking_Functions{
       } elseif ( ! $available_bookings ) {
           $isOk = false;
       } else {
+        if ( $available_bookings >= $quantity ) {
           $isOk = true;
+        }
       }
 
       $this->is_open = $isOk;
@@ -244,7 +246,6 @@ class Pez_Booking_Functions{
       }
       return $okay;
   }
-
 
   /**
   * Get qty input value from booking form
@@ -283,7 +284,7 @@ class Pez_Booking_Functions{
     );
 
     $qty_ops_arr = array();
-    for ($x = 1; $x <= count($product->get_resources()); $x++) {
+    for ($x = 1; ( $x <= count($product->get_resources()) && $x <= $this->max_res_count ); $x++) {
       $qty_ops_arr[ $x ] = __( $x );
     }
 

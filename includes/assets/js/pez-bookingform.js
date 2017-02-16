@@ -1,52 +1,82 @@
-
-var module;
-var inpPezDurration;
-var inpPezQuantity;
-var inpWcDurration;
-var selHours;
-var maxQty;
-var fields;
-
 (function( $ ) {
 	'use strict';
 
-  initPez();
 
-  function initPez() {
-    module = $("#wc-bookings-booking-form");
-    inpPezDurration = module.find("#pez_field_duration");
-    inpWcDurration = module.find("input[name='wc_bookings_field_duration']");
-    inpPezQuantity = module.find("input[name='pez_field_quantity']");
-    fields = module.find("fieldset.wc-bookings-date-picker");
-    selHours = 2;
+	var pezBookingForm = (function () {
 
-    inpPezQuantity.val(1);
-    inpPezDurration.val(2);
-    inpWcDurration.val(selHours * 60);
+		var formModule;
+		var boxProduct;
+		var boxTabs;
+		var boxTabDetails;
+		var inpPezDurration;
+		var inpPezQuantity;
+		var inpWcDurration;
+		var selHours;
+		var fields;
+		var tabAction;
 
-    $(document).on('change', '#pez_field_duration', setDuration );
-    $(document).on('change', '#pez_field_quantity', getTimeBlocks );
-		$(document).on('click', "td.ui-date-picker", doBookingScroll );
-  }
+		var controller = {
+		  init: function() {
+				formModule = $("#main");
+		    inpPezDurration = formModule.find("#pez_field_duration");
+		    inpWcDurration = formModule.find("input[name='wc_bookings_field_duration']");
+		    inpPezQuantity = formModule.find("input[name='pez_field_quantity']");
+		    fields = formModule.find("fieldset.wc-bookings-date-picker");
+				boxProduct = formModule.find(".summary .cart");
+				boxTabs = formModule.find(".woocommerce-tabs.wc-tabs-wrapper");
+				boxTabDetails = formModule.find("#tab-product_details");
+		    selHours = 2;
+		    inpPezQuantity.val(1);
+		    inpPezDurration.val(2);
+		    inpWcDurration.val(selHours * 60);
 
-  function setDuration() {
-    selHours = inpPezDurration.val();
-    inpWcDurration.val(selHours * 60);
-    updateTimes();
-  }
+				controller.prepTabList();
 
-  function getTimeBlocks() {
-    updateTimes();
-  }
+				tabAction = formModule.find("li.product_details_tab.active");
+				tabAction.addClass("closed");
 
-  function updateTimes() {
-    $('td.ui-datepicker-current-day').click();
-  }
+		    formModule.on('change', '#pez_field_duration', controller.setDuration );
+		    formModule.on('change', '#pez_field_quantity', controller.getTimeBlocks );
+				formModule.on('click', '.product_details_tab.active', controller.toggleTabDetails );
+		  },
+		  prepTabList: function(e) {
+				boxTabs.prependTo(boxProduct);
+				boxTabDetails.addClass("pezHidden");
+				$('.product_title.entry-title').hide();
+				$('.single-product div.product .summary p.price').hide();
+		  },
+			setDuration: function(e) {
+		    selHours = inpPezDurration.val();
+		    inpWcDurration.val(selHours * 60);
+		    controller.updateTimes();
+		  },
+		  getTimeBlocks: function(e) {
+		    controller.updateTimes();
+		  },
+			updateTimes: function(e) {
+		    $('td.ui-datepicker-current-day').click();
+		  },
+			toggleTabDetails: function(e) {
+				e.stopPropagation();
+				if (boxTabDetails.hasClass("pezHidden")) {
+					boxTabDetails.removeClass("pezHidden");
+				} else {
+					boxTabDetails.toggle();
+				}
+				if ($(this).hasClass("open")) {
+					$(this).removeClass("open").addClass("closed");
+				} else {
+					$(this).addClass("open").removeClass("closed");
+				}
 
-  function doBookingScroll() {
-		$('html, body').animate({
-      scrollTop: fields.offset().top
-    }, 1000 );
-  }
+				return false;
+			},
+		};
+
+	  return controller;
+	}());
+
+
+	$(document).ready(pezBookingForm.init);
 
 })( jQuery );

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * WordPress Main Plugin Controller
+ * Paddle EZ Main Plugin Controller
  *
  * @package    Pez
  * @subpackage Pez/includes
@@ -16,7 +16,7 @@ class Pez {
 
 	public function __construct() {
 		$this->plugin_name = 'pez';
-		$this->version = '2.1.0';
+		$this->version = '2.4.5';
 		$this->load_dependencies();
 		$this->define_public_hooks();
 	}
@@ -37,6 +37,7 @@ class Pez {
 		$this->loader->add_filter( 'woocommerce_get_price_html', $booking_controller, 'pez_modify_price_html' );
 		$this->loader->add_filter( 'booking_form_fields', $booking_controller, 'pez_add_custom_form_fields', 20 );
 		$this->loader->add_filter( 'woocommerce_get_item_data', $booking_controller, 'pez_add_cart_scripts', 11, 2 );
+		$this->loader->add_filter( 'woocommerce_product_tabs', $booking_controller, 'pez_modify_product_tabs', 98 );
 		$this->loader->add_action( 'wp_ajax_wc_bookings_get_blocks', $booking_controller, 'pez_get_blocks' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wc_bookings_get_blocks', $booking_controller, 'pez_get_blocks' );
 		$this->loader->add_action( 'woocommerce_add_cart_item_data', $booking_controller, 'pez_update_cart_item_data', 11, 2 );
@@ -46,7 +47,6 @@ class Pez {
 		$this->loader->add_action( 'booking_form_calculated_booking_cost', $booking_controller, 'pez_adjust_booking_cost', 11, 3 );
 		$this->loader->add_action( 'woocommerce_order_status_processing', $booking_controller, 'pez_publish_bookings', 11 );
 		$this->loader->add_action( 'woocommerce_order_status_completed', $booking_controller, 'pez_publish_bookings', 11 );
-
 	}
 
 	public function run() {

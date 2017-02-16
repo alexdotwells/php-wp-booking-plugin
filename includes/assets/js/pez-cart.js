@@ -1,39 +1,60 @@
-
-var pez_cartModule;
-var pezCart = [];
-var qtyCells
-var qtyVals;
-
 (function( $ ) {
 	'use strict';
 
-    initPezCart();
-    
-    function initPezCart() {    
-        pez_cartModule = $('table.cart');
-        qtyVals = pez_cartModule.find('dd.variation-Quantity p');
-        qtyCells = pez_cartModule.find('td.product-quantity');
-        
-        var priceCells = pez_cartModule.find('td.product-price span.woocommerce-Price-amount');
 
-        qtyVals.each(function() { 
+	var pezCart = (function () {
+
+		var cartModule;
+		var pezCart = [];
+		var qtyCells
+		var qtyVals;
+		var priceCells;
+
+		var controller = {
+			init: function() {
+        console.log("Paddle-EZ Cart Controller Initialized"); // DEBUG
+
+				cartModule = $("#main");
+        qtyVals = cartModule.find('dd.variation-Quantity p');
+        qtyCells = cartModule.find('td.product-quantity');
+        priceCells = cartModule.find('td.product-price span.woocommerce-Price-amount');
+
+				controller.addProduct();
+        controller.updateQuantity();
+        controller.updatePrice();
+			},
+			addProduct: function() {
+				var cartwrap = cartModule.find('div.entry-content div.woocommerce');
+				cartwrap.prepend('<div class="woocommerce-info">Want to add another product? <a href="#" class="showProduct">Click here</a></div>');
+			},
+      updatePrice: function() {
+        priceCells.each(function() {
+            var span = $(this).find('span');
+            var currhtml = $(this).html();
+            $(this).html( currhtml );
+        });
+      },
+      updateQuantity: function() {
+        qtyVals.each(function() {
             pezCart.push( $(this).html() );
         });
-        
-        var i = 0;       
-        qtyCells.each(function() {   
+
+        var i = 0;
+        qtyCells.each(function() {
             var inpt = $(this).find('input');
             inpt.val(pezCart[i]);
             $(this).html(pezCart[i]);
             $(this).append(inpt);
             i += 1;
         });
-         
-        priceCells.each(function() {   
-            var span = $(this).find('span');
-            var currhtml = $(this).html();
-            $(this).html( currhtml );
-        });
-    }
-        
+      }
+		};
+
+		return controller;
+	}());
+
+
+	$(document).ready(pezCart.init);
+
+
 })( jQuery );
