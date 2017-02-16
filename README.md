@@ -1,11 +1,10 @@
-/**
- - @wordpress-plugin
- - Plugin Name:       Paddle EZ Custom Booking
- - Version:           2.1.1
+
+ # WC Ecommerce/Reservation Plugin
+ - Version:           2.5.0
  - Author:            AWells <ajwells99@gmail.com>
- - Description:       Paddle EZ Custom Booking Plugin. Style, script, and markup changes to extend the Woocommerce Bookings process.
+ - Description:       Custom Ecommerce/Reservation Plugin
  - Text Domain:       pez
- */
+
 
 
 # FILE:  pez.php

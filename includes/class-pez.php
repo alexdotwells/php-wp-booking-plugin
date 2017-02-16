@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Paddle EZ Main Plugin Controller
+ *  Main Plugin Controller
  *
  * @package    Pez
  * @subpackage Pez/includes
@@ -16,7 +16,7 @@ class Pez {
 
 	public function __construct() {
 		$this->plugin_name = 'pez';
-		$this->version = '2.4.5';
+		$this->version = '2.5.0';
 		$this->load_dependencies();
 		$this->define_public_hooks();
 	}

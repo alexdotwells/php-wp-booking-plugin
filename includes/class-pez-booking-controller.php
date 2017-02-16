@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Paddle EZ Booking Controller
+ *  Booking Controller
  *
  * @package    Pez
  * @subpackage Pez/includes

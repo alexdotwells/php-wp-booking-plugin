@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Paddle EZ Custom Booking Methods
+ *  Custom Booking Methods
  *
  * @package    Pez
  * @subpackage Pez/includes

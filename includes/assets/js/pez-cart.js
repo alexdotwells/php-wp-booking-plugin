@@ -12,8 +12,6 @@
 
 		var controller = {
 			init: function() {
-        console.log("Paddle-EZ Cart Controller Initialized"); // DEBUG
-
 				cartModule = $("#main");
         qtyVals = cartModule.find('dd.variation-Quantity p');
         qtyCells = cartModule.find('td.product-quantity');
@@ -38,7 +36,6 @@
         qtyVals.each(function() {
             pezCart.push( $(this).html() );
         });
-
         var i = 0;
         qtyCells.each(function() {
             var inpt = $(this).find('input');
